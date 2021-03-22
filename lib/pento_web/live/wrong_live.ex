@@ -1,7 +1,8 @@
 defmodule PentoWeb.WrongLive do
   use PentoWeb, :live_view
+  alias Pento.Accounts
 
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
     number_of_choices = 11
     correct_number = to_string(:rand.uniform(number_of_choices))
 
@@ -14,7 +15,9 @@ defmodule PentoWeb.WrongLive do
         score: 0,
         game_over: false,
         message: "Guess a number.",
-        time: time()
+        time: time(),
+        user: Accounts.get_user_by_session_token(session["user_token"]),
+        session_id: session["live_socket_id"]
       )
     }
   end
@@ -86,6 +89,10 @@ defmodule PentoWeb.WrongLive do
         <%=  # live_patch "Play Again", to: Routes.live_path(@socket, WrongLive) %>
       <% end %>
     </h2>
+    <pre>
+      <%= @user.email %>
+      <%= @session_id %>
+    </pre>
     """
   end
 end
