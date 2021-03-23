@@ -1,5 +1,5 @@
 <h1>Listing Products</h1>
-
+<h1><%= @greeting %></h1>
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, PentoWeb.ProductLive.FormComponent,
     id: @product.id || :new,
@@ -8,7 +8,6 @@
     product: @product,
     return_to: Routes.product_index_path(@socket, :index) %>
 <% end %>
-
 <table>
   <thead>
     <tr>
@@ -16,7 +15,6 @@
       <th>Description</th>
       <th>Unit price</th>
       <th>Sku</th>
-
       <th></th>
     </tr>
   </thead>
@@ -27,15 +25,22 @@
         <td><%= product.description %></td>
         <td><%= product.unit_price %></td>
         <td><%= product.sku %></td>
-
         <td>
-          <span><%= live_redirect "Show", to: Routes.product_show_path(@socket, :show, product) %></span>
-          <span><%= live_patch "Edit", to: Routes.product_index_path(@socket, :edit, product) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: product.id, data: [confirm: "Are you sure?"] %></span>
+          <span>
+            <%= live_redirect "Show", to: Routes.product_show_path(@socket, :show, product) %>
+          </span>
+          <span>
+            <%= live_patch "Edit", to: Routes.product_index_path(@socket, :edit, product) %>
+          </span>
+          <span>
+            <%= link "Delete", to: "#", phx_click: "delete", phx_value_id:
+          product.id, data: [confirm: "Are you sure?"] %>
+          </span>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<span><%= live_patch "New Product", to: Routes.product_index_path(@socket, :new) %></span>
+<span>
+  <%= live_patch "New Product", to: Routes.product_index_path(@socket, :new) %>
+</span>

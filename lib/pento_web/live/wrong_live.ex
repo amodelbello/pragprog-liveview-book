@@ -2,6 +2,16 @@ defmodule PentoWeb.WrongLive do
   use PentoWeb, :live_view
   alias Pento.Accounts
 
+  @impl true
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  defp apply_action(socket, _, _) do
+    socket
+  end
+
+  @impl true
   def mount(_params, session, socket) do
     number_of_choices = 11
     correct_number = to_string(:rand.uniform(number_of_choices))
@@ -22,6 +32,7 @@ defmodule PentoWeb.WrongLive do
     }
   end
 
+  @impl true
   def handle_event(
         "guess",
         %{"number" => guess} = data,
@@ -69,6 +80,7 @@ defmodule PentoWeb.WrongLive do
     DateTime.utc_now() |> to_string
   end
 
+  @impl true
   def render(assigns) do
     ~L"""
     <h1>Your score: <%= @score %><h1>
@@ -86,7 +98,8 @@ defmodule PentoWeb.WrongLive do
         <% end %>
       <% else %>
         <!-- <button>Play again</button> -->
-        <%=  # live_patch "Play Again", to: Routes.live_path(@socket, WrongLive) %>
+          <%= # live_patch "Edit", to: Routes.product_index_path(@socket, :index) %>
+          <%= # live_patch "Play Again", to: Routes.live_path(@socket, WrongLive, :guess) %>
       <% end %>
     </h2>
     <pre>
