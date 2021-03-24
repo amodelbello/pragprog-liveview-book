@@ -32,6 +32,7 @@ defmodule PentoWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     live "/guess", WrongLive, :guess
+    live "/promo", PromoLive
   end
 
   # Other scopes may use custom stacks.
