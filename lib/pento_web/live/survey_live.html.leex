@@ -7,6 +7,12 @@
     PentoWeb.DemographicLive.ShowComponent,
     demographic: @demographic
   %>
+  <%=
+    live_component @socket,
+    PentoWeb.RatingLive.IndexComponent,
+    products: @products,
+    current_user: @current_user
+  %>
 <% else %>
   <section class="row">
     <%=
