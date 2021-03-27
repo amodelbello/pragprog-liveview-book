@@ -2,6 +2,10 @@ defmodule PentoWeb.SurveyLive do
   use PentoWeb, :live_view
   alias Pento.{Catalog, Accounts, Survey}
 
+  # TODO: PubSub stuff
+  alias PentoWeb.Endpoint
+  @survey_results_topic "survey_results"
+
   @impl true
   def handle_info({:created_demographic, demographic}, socket) do
     {:noreply, handle_demographic_created(socket, demographic)}
@@ -23,6 +27,9 @@ defmodule PentoWeb.SurveyLive do
          updated_product,
          product_index
        ) do
+    # TODO: PubSub stuff
+    Endpoint.broadcast(@survey_results_topic, "rating_created", %{})
+
     socket
     |> put_flash(:info, "Rating submitted successfully")
     |> assign(:products, List.replace_at(products, product_index, updated_product))

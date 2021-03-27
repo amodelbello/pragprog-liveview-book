@@ -1,6 +1,7 @@
 <section class="row">
   <h1>Survey Results</h1>
 </section>
+<p><%= @age_group_filter %></p>
 <form phx-change="age_group_filter" phx-target="<%= @myself %>">
   <label>Filter by age group:</label>
   <select name="age_group_filter" id="age_group_filter">

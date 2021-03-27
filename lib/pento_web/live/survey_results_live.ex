@@ -52,19 +52,15 @@ defmodule PentoWeb.SurveyResultsLive do
   end
 
   def assign_age_group_filter(socket, age_group_filter) do
-    assign(socket, :age_group_fitler, age_group_filter)
+    assign(socket, :age_group_filter, age_group_filter)
   end
 
   def assign_age_group_filter(%{assigns: %{age_group_filter: age_group_filter}} = socket) do
-    IO.puts("okay matching!!!: " <> age_group_filter)
-
-    socket
-    |> assign(:age_group_filter, age_group_filter)
+    assign(socket, :age_group_filter, age_group_filter)
   end
 
   def assign_age_group_filter(socket) do
-    socket
-    |> assign(:age_group_filter, "all")
+    assign(socket, :age_group_filter, "all")
   end
 
   def assign_dataset(
@@ -78,30 +74,15 @@ defmodule PentoWeb.SurveyResultsLive do
     |> assign(:dataset, make_bar_chart_dataset(products_with_average_ratings))
   end
 
-  # defp make_bar_chart_dataset(data) do
-  #   Contex.Dataset.new(data)
-  # end
-
   defp assign_chart(%{assigns: %{dataset: dataset}} = socket) do
     socket
     |> assign(:chart, make_bar_chart(dataset))
   end
 
-  # defp make_bar_chart(dataset) do
-  #   Contex.BarChart.new(dataset)
-  # end
-
   def assign_chart_svg(%{assigns: %{chart: chart}} = socket) do
     socket
     |> assign(:chart_svg, render_bar_chart(chart, title(), subtitle(), x_axis(), y_axis()))
   end
-
-  # def render_bar_chart(chart) do
-  #   Plot.new(500, 400, chart)
-  #   |> Plot.titles(title(), subtitle())
-  #   |> Plot.axis_labels(x_axis(), y_axis())
-  #   |> Plot.to_svg()
-  # end
 
   defp title do
     "Product Ratings"
